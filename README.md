@@ -14,7 +14,7 @@ This action looks for the next valid version number to upload a new app or bundl
 
 ## Outputs
 
-### `nextVersionCode`
+### `versionCode`
 
 The next valid version number to upload a new apk or bundle
 
@@ -23,8 +23,8 @@ The next valid version number to upload a new apk or bundle
 ### Basic
 
 ```yaml
-- uses: mmachado53/google-play-next-version-code@vx.x.x
-  id: nexVersionCode
+- uses: mmachado53/google-play-next-version-code@v0.0.5
+  id: next_version_code
   with:
     serviceAccountJsonFile: ./service-account.json
     packageName: com.your.packageName
@@ -35,8 +35,8 @@ The next valid version number to upload a new apk or bundle
 ```yaml
 - name: building service_account.json
   run: echo '${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}' > service_account.json
-- uses: mmachado53/google-play-next-version-code@vx.x.x
-  id: nexVersionCode
+- uses: mmachado53/google-play-next-version-code@v0.0.5
+  id: next_version_code
   with:
     serviceAccountJsonFile: service-account.json
     packageName: com.your.packageName
@@ -45,17 +45,17 @@ The next valid version number to upload a new apk or bundle
 ### Putting the version number in the code
 
 ```yaml
-- name: building service_account.json
-  run: echo '${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}' > service_account.json
-- uses: mmachado53/google-play-next-version-code@vx.x.x
-  id: nex_version_code
+- name: building service-account.json
+  run: echo '${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}' > service-account.json
+- uses: mmachado53/google-play-next-version-code@v0.0.5
+  id: next_version_code
   with:
     serviceAccountJsonFile: service-account.json
     packageName: com.your.packageName
 - name: Putting version code into app/build.gradle
-  uses: chkfung/android-version-actions@v1.1
+  uses: chkfung/android-version-actions@v1.2.2
   with:
     gradlePath: app/build.gradle
-    versionCode: ${{steps.nex_version_code.outputs.nexVersionCode}}
+    versionCode: ${{steps.next_version_code.outputs.versionCode}}
 ```
 
